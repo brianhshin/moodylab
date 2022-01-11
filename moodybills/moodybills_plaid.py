@@ -4,12 +4,12 @@ import json
 from plaid.model.transactions_get_request_options import TransactionsGetRequestOptions
 from plaid.model.transactions_get_request import TransactionsGetRequest
 from plaid.api import plaid_api
-from datetime import datetime
+from datetime import datetime, timedelta
 
 client_id = '61cc8121dab78b001ae38a9b'
 secret = '7b976076a39a07250223254dc96aa4'
-start_dt = '2021-07-01'
-end_dt = '2021-12-31'
+start_dt = datetime.now().strftime("%Y-%m-%d") 
+end_dt = (datetime.now() - timedelta(1)).strftime("%Y-%m-%d")
 
 configuration = plaid.Configuration(
     host=plaid.Environment.Development,
@@ -35,7 +35,7 @@ request = TransactionsGetRequest(
     access_token=access_token,
     start_date=datetime.strptime(start_dt, '%Y-%m-%d').date(),
     end_date=datetime.strptime(end_dt, '%Y-%m-%d').date(),
-    options=TransactionsGetRequestOptions(count=500)
+    options=TransactionsGetRequestOptions(count=100)
     )
 response = client.transactions_get(request)
 print(f'total_transactions: {response["total_transactions"]}')
