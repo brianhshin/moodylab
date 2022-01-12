@@ -45,23 +45,16 @@ class MoodyBillsRawdata():
             );
             """
         cur.execute(accounts_create_sql)
-
         for item in self.accounts_data:
             columns = list(item.keys())
-            # print(f'---- columns: {columns}')
             values = list(item.values())
-            # print(f'---- values: {values}')
             insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
             insert_values = str(values).replace("[", "").replace("]", "").replace('"', "'").replace('None', "'None'")
             insert_sql = f"""INSERT INTO rawdata.moodybills_accounts_rawdata ({insert_columns}) VALUES({insert_values});"""
             # print(f'---- insert_sql: {insert_sql}')
             cur.execute(insert_sql)
-
-
         self.conn.commit()
         log.info(f'inserted values into rawdata.moodybills_accounts_rawdata')
-
-    
 
         cur = self.conn.cursor()
         transactions_create_sql = """
@@ -98,23 +91,17 @@ class MoodyBillsRawdata():
             );
             """
         cur.execute(transactions_create_sql)
-
         for item in self.transactions_data:
             print(self.transactions_data[0])
             columns = list(item.keys())
-            print(f'---- columns: {columns}')
             values = list(item.values())
-            print(f'---- values: {values}')
             insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
             insert_values = str(values).replace("[", "").replace("]", "").replace('None', "'None'")
             insert_sql = f"""INSERT INTO rawdata.moodybills_transactions_rawdata ({insert_columns}) VALUES({insert_values});"""
-            print(f'---- insert_sql: {insert_sql}')
+            # print(f'---- insert_sql: {insert_sql}')
             cur.execute(insert_sql)
         conn.commit()
         log.info(f'inserted values into rawdata.moodybills_transactions_rawdata')
 
-
-
 if __name__ == '__main__':
-
     MoodyBillsRawdata().create_accounts_rawdata()
