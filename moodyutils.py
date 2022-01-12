@@ -30,3 +30,12 @@ class MoodyUtils():
         content_json = json.loads(content)
         print(f'successfully downloaded from s3://{self.s3_bucket}/{filepath}.')
         return content_json
+
+    def insert_data(self, schema, table, item):
+        columns = list(item.keys())
+        values = list(item.values())
+        insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
+        insert_values = str(values).replace("[", "").replace("]", "").replace('"', "'").replace('None', "'None'")
+        insert_sql = f"""INSERT INTO {schema}.{table} ({insert_columns}) VALUES({insert_values});"""
+        # print(f'---- insert_sql: {insert_sql}')
+        return insert_sql

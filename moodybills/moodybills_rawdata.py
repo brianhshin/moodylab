@@ -23,16 +23,18 @@ class MoodyBillsRawdata():
             password=os.environ['moodydb_conn_pw']
             )
         print(f'successful moodydb connection.')
-        today = datetime.now().strftime("%Y%m%d")
-        moodyutils = MoodyUtils()
-        self.accounts_data = moodyutils.s3_download(f'moodybills/accounts/accounts_{today}.json')
-        self.transactions_data = moodyutils.s3_download(f'moodybills/transactions/transactions_{today}.json')
+        self.moodyutils = MoodyUtils()
         print(f'successful moodydb connection.')
+        self.schema = 'rawdata'
 
-    def create_accounts_rawdata(self,):
+    def create_accounts_rawdata(self):
+        today = datetime.now().strftime("%Y%m%d")
+        accounts_data = self.moodyutils.s3_download(f'moodybills/accounts/accounts_{today}.json')
+        transactions_data = self.moodyutils.s3_download(f'moodybills/transactions/transactions_{today}.json')
+        accounts_rawdata_table = 'moodybills_accounts_rawdata'
         cur = self.conn.cursor()
-        accounts_create_sql = """
-            CREATE TABLE IF NOT EXISTS rawdata.moodybills_accounts_rawdata (
+        accounts_create_sql = f"""
+            CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_rawdata_table} (
                 account_id TEXT NOT NULL,
                 mask TEXT NOT NULL,
                 available_balance TEXT NOT NULL,
@@ -45,20 +47,17 @@ class MoodyBillsRawdata():
             );
             """
         cur.execute(accounts_create_sql)
-        for item in self.accounts_data:
-            columns = list(item.keys())
-            values = list(item.values())
-            insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
-            insert_values = str(values).replace("[", "").replace("]", "").replace('"', "'").replace('None', "'None'")
-            insert_sql = f"""INSERT INTO rawdata.moodybills_accounts_rawdata ({insert_columns}) VALUES({insert_values});"""
-            # print(f'---- insert_sql: {insert_sql}')
+        for item in accounts_data:
+            insert_sql = self.moodyutils.insert_data(self.schema, accounts_rawdata_table, item)
             cur.execute(insert_sql)
-        self.conn.commit()
-        log.info(f'inserted values into rawdata.moodybills_accounts_rawdata')
 
+        self.conn.commit()
+        log.info(f'inserted values into {self.schema}.{accounts_rawdata_table}')
+
+        transactions_rawdata_table = 'moodybills_transactions_rawdata'
         cur = self.conn.cursor()
-        transactions_create_sql = """
-            CREATE TABLE IF NOT EXISTS rawdata.moodybills_transactions_rawdata (
+        transactions_create_sql = f"""
+            CREATE TABLE IF NOT EXISTS {self.schema}.{transactions_rawdata_table} (
                 transaction_id TEXT NOT NULL,
                 transaction_name TEXT NOT NULL,
                 account_id TEXT NOT NULL,
@@ -91,17 +90,11 @@ class MoodyBillsRawdata():
             );
             """
         cur.execute(transactions_create_sql)
-        for item in self.transactions_data:
-            print(self.transactions_data[0])
-            columns = list(item.keys())
-            values = list(item.values())
-            insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
-            insert_values = str(values).replace("[", "").replace("]", "").replace('None', "'None'")
-            insert_sql = f"""INSERT INTO rawdata.moodybills_transactions_rawdata ({insert_columns}) VALUES({insert_values});"""
-            # print(f'---- insert_sql: {insert_sql}')
+        for item in transactions_data:
+            insert_sql = self.moodyutils.insert_data(self.schema, transactions_rawdata_table, item)    
             cur.execute(insert_sql)
-        conn.commit()
-        log.info(f'inserted values into rawdata.moodybills_transactions_rawdata')
+        self.conn.commit()
+        log.info(f'inserted values into {self.schema}.{transactions_rawdata_table}')
 
 if __name__ == '__main__':
     MoodyBillsRawdata().create_accounts_rawdata()
