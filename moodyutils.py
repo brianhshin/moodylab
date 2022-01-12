@@ -27,5 +27,6 @@ class MoodyUtils():
     def s3_download(self, filepath):
         s3 = self.session.resource('s3')
         content = s3.Object(bucket_name=self.s3_bucket, key=filepath).get()['Body'].read()
+        content_json = json.loads(content)
         print(f'successfully downloaded from s3://{self.s3_bucket}/{filepath}.')
-        return content
+        return content_json
