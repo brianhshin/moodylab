@@ -4,6 +4,7 @@ import boto3
 from datetime import datetime, timedelta
 
 class MoodyUtils():
+    
     def __init__(self):
         # aws creds
         access_key_id = os.environ['aws_access_key_id']
@@ -33,7 +34,8 @@ class MoodyUtils():
 
     def insert_data(self, schema, table, item):
         columns = list(item.keys())
-        values = list(item.values())
+        val_list = list(item.values())
+        values = [value.replace("'", "''") if isinstance(value, str) else value for value in val_list]
         insert_columns = str(columns).replace("[", "").replace("]", "").replace("'", "")
         insert_values = str(values).replace("[", "").replace("]", "").replace('"', "'").replace('None', "'None'")
         insert_sql = f"""INSERT INTO {schema}.{table} ({insert_columns}) VALUES({insert_values});"""

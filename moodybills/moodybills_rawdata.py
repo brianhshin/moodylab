@@ -1,15 +1,12 @@
 import os
 import sys
 import psycopg2
-import boto3
-import argparse
-import logging
 from datetime import datetime, timedelta
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger(__name__)
-
 sys.path.append('../')
 from moodyutils import MoodyUtils
+import logging
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 
 class MoodyBillsRawdata():
@@ -26,11 +23,10 @@ class MoodyBillsRawdata():
         self.moodyutils = MoodyUtils()
         print(f'successful moodydb connection.')
         self.schema = 'rawdata'
+        self.today = datetime.now().strftime("%Y%m%d")
 
     def create_accounts_rawdata(self):
-        today = datetime.now().strftime("%Y%m%d")
-        accounts_data = self.moodyutils.s3_download(f'moodybills/accounts/accounts_{today}.json')
-        transactions_data = self.moodyutils.s3_download(f'moodybills/transactions/transactions_{today}.json')
+        accounts_data = self.moodyutils.s3_download(f'moodybills/accounts/accounts_{self.today}.json')
         accounts_rawdata_table = 'moodybills_accounts_rawdata'
         cur = self.conn.cursor()
         accounts_create_sql = f"""
@@ -54,6 +50,8 @@ class MoodyBillsRawdata():
         self.conn.commit()
         log.info(f'inserted values into {self.schema}.{accounts_rawdata_table}')
 
+    def create_transactions_rawdata(self):
+        transactions_data = self.moodyutils.s3_download(f'moodybills/transactions/transactions_{self.today}.json')
         transactions_rawdata_table = 'moodybills_transactions_rawdata'
         cur = self.conn.cursor()
         transactions_create_sql = f"""
@@ -95,6 +93,3 @@ class MoodyBillsRawdata():
             cur.execute(insert_sql)
         self.conn.commit()
         log.info(f'inserted values into {self.schema}.{transactions_rawdata_table}')
-
-if __name__ == '__main__':
-    MoodyBillsRawdata().create_accounts_rawdata()

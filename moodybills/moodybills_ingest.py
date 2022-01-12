@@ -4,11 +4,12 @@ import math
 import argparse
 import json
 import pandas as pd
-from moodybills_plaid import MoodyBills
-sys.path.append('../')
-from moodyutils import MoodyUtils
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from moodybills_plaid import MoodyBills
+from moodybills_rawdata import MoodyBillsRawdata
+sys.path.append('../')
+from moodyutils import MoodyUtils
 
 def get_args():
     parser = argparse.ArgumentParser(description='moodybills scraper.')
@@ -28,7 +29,6 @@ def ingest_moodybills(is_backfill):
     transactions = []
     today = datetime.now().strftime("%Y%m%d")
     for line in lines:
-        line_account = []
         line_transactions = []
         if is_backfill == 'Y':
             first_date = '2021-05-01'
@@ -40,7 +40,7 @@ def ingest_moodybills(is_backfill):
                 end_dt = start_dt + relativedelta(months=+1)
                 end_date = end_dt.strftime("%Y-%m-%d")
                 week_accounts, week_transactions = moodybills.get_moodybills(line, 500, start_date, end_date)
-                line_account += week_accounts
+                line_accounts = week_accounts
                 line_transactions += week_transactions
         else:
             start_dt = (datetime.now().date() + timedelta(-1)).strftime("%Y-%m-%d")
@@ -48,7 +48,7 @@ def ingest_moodybills(is_backfill):
             day_accounts, day_transactions = moodybills.get_moodybills(line, 30, start_dt, end_dt)
             line_account += day_accounts
             line_transactions += day_transactions
-        accounts += line_account
+        accounts += line_accounts
         transactions += line_transactions
 
     accounts_filepath = f'moodybills/accounts/accounts_{today}.json'
@@ -56,11 +56,17 @@ def ingest_moodybills(is_backfill):
     accounts_response = moodyutils.s3_upload(accounts, accounts_filepath)
     transactions_response = moodyutils.s3_upload(transactions, transactions_filepath)
 
+def load_rawdata():
+    moodydb_rawdata = MoodyBillsRawdata()
+    moodydb_rawdata.create_accounts_rawdata()
+    moodydb_rawdata.create_transactions_rawdata()
+
 # u know what it do
 if __name__ == '__main__':
     # parse is_backfill from args
     is_backfill = get_args()
     print('is_backfill:', is_backfill)
     ingest_moodybills(is_backfill)
+    load_rawdata()
 
 
