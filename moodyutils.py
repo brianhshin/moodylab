@@ -21,5 +21,11 @@ class MoodyUtils():
         content_json = json.dumps(content, default=str)
         today = datetime.now().strftime("%Y%m%d")
         response = s3.Object(self.s3_bucket, filepath).put(Body=content_json)
-        print(f'successfully uploaded to {self.s3_bucket}/{filepath}.')
+        print(f'successfully uploaded to s3://{self.s3_bucket}/{filepath}.')
         return response
+
+    def s3_download(self, filepath):
+        s3 = self.session.resource('s3')
+        content = s3.Object(bucket_name=self.s3_bucket, key=filepath).get()['Body'].read()
+        print(f'successfully downloaded from s3://{self.s3_bucket}/{filepath}.')
+        return content

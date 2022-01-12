@@ -40,17 +40,14 @@ def ingest_moodybills(is_backfill):
                 end_dt = start_dt + relativedelta(months=+1)
                 end_date = end_dt.strftime("%Y-%m-%d")
                 week_accounts, week_transactions = moodybills.get_moodybills(line, 500, start_date, end_date)
-                line_account.append(week_accounts)
-                line_transactions.append(week_transactions)
+                line_account += week_accounts
+                line_transactions += week_transactions
         else:
-            # scrapes all data for current day
-            datetime.strptime('2014-12-04', '%Y-%m-%d').date()
-
             start_dt = (datetime.now().date() + timedelta(-1)).strftime("%Y-%m-%d")
             end_dt = datetime.now().strftime("%Y-%m-%d")
             day_accounts, day_transactions = moodybills.get_moodybills(line, 30, start_dt, end_dt)
-            line_account.append(day_accounts)
-            line_transactions.append(day_transactions)
+            line_account += day_accounts
+            line_transactions += day_transactions
         accounts += line_account
         transactions += line_transactions
 

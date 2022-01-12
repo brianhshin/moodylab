@@ -41,22 +41,37 @@ class MoodyBills():
                 'account_id': account['account_id'],
                 'mask': account['mask'],
                 'available_balance': account['balances']['available'],
-                'current_balance': account['balances']['current']
+                'current_balance': account['balances']['current'],
+                'iso_currency_code': account['balances']['iso_currency_code'],
+                'balance_limit': account['balances']['limit'],
+                'unofficial_currency_code': account['balances']['unofficial_currency_code'],
+                'official_name': account['official_name'],
+                'subtype': account['subtype'],
+                'type': account['type']
                 }
             accounts.append(account_dict)
         for transaction in response['transactions']:
             transactions_dict = {
                 'transaction_id': transaction['transaction_id'],
                 'transaction_name': transaction['name'],
+                'account_id': transaction['account_id'],
                 'amount': transaction['amount'],
-                'authorized_date': transaction['authorized_date'],
-                'date': transaction['date'],
+                'iso_currency_code': transaction['iso_currency_code'],
+                'unofficial_currency_code': transaction['unofficial_currency_code'],
                 'category': transaction['category'],
-                'account_id': transaction['account_id']
+                'category_id': transaction['category_id'],
+                'transaction_date': transaction['date'],
+                'authorized_date': transaction['authorized_date'],
+                'location': transaction['location'],
+                'payment_meta': transaction['payment_meta'],
+                'payment_channel': transaction['payment_channel'],
+                'pending': transaction['pending'],
+                'pending_transaction_id': transaction['pending_transaction_id'],
+                'account_owner': transaction['account_owner'],
+                'transaction_code': transaction['transaction_code'],
+                'transaction_type': transaction['transaction_type']
                 }
             transactions.append(transactions_dict)
         print(f'{line[0]} number of accounts: {len(accounts)}')
         print(f'{line[0]} number of transactions: {len(transactions)}')
-        print(accounts)
-        print(transactions)
-        return account, transactions
+        return accounts, transactions
