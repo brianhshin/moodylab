@@ -32,6 +32,7 @@ class MoodyBillsRawdata():
         accounts_create_sql = f"""
             CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_rawdata_table} (
                 account_id TEXT NOT NULL,
+                balance_date TEXT NOT NULL,
                 mask TEXT NOT NULL,
                 available_balance TEXT NOT NULL,
                 current_balance TEXT NOT NULL,

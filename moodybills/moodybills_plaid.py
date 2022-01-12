@@ -39,6 +39,7 @@ class MoodyBills():
         for account in response['accounts']:
             account_dict = {
                 'account_id': account['account_id'],
+                'balance_date': datetime.today().strftime('%Y-%m-%d'),
                 'mask': account['mask'],
                 'available_balance': account['balances']['available'],
                 'current_balance': account['balances']['current'],

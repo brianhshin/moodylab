@@ -46,7 +46,7 @@ def ingest_moodybills(is_backfill):
             start_dt = (datetime.now().date() + timedelta(-1)).strftime("%Y-%m-%d")
             end_dt = datetime.now().strftime("%Y-%m-%d")
             day_accounts, day_transactions = moodybills.get_moodybills(line, 30, start_dt, end_dt)
-            line_account += day_accounts
+            line_accounts = day_accounts
             line_transactions += day_transactions
         accounts += line_accounts
         transactions += line_transactions
