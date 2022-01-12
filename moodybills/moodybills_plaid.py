@@ -14,7 +14,6 @@ class MoodyBills():
         # plaid creds
         client_id = os.environ['plaid_client_id']
         secret = os.environ['plaid_secret']
- 
         configuration = plaid.Configuration(
             host=plaid.Environment.Development,
             api_key={
@@ -22,10 +21,9 @@ class MoodyBills():
                 'secret': secret,
                 }
             )
-        print(f'successful plaid api connection.')
-
         api_client = plaid.ApiClient(configuration)
         self.client = plaid_api.PlaidApi(api_client)
+        print(f'successful plaid api connection.')
 
     def get_moodybills(self, line, count, start_dt, end_dt):
         request = TransactionsGetRequest(
@@ -36,10 +34,8 @@ class MoodyBills():
             )
         response = self.client.transactions_get(request)
         print(f'{line[0]} total_transactions: {response["total_transactions"]}')
-
         accounts = []
         transactions = []
-
         for account in response['accounts']:
             account_dict = {
                 'account_id': account['account_id'],
@@ -48,7 +44,6 @@ class MoodyBills():
                 'current_balance': account['balances']['current']
                 }
             accounts.append(account_dict)
-
         for transaction in response['transactions']:
             transactions_dict = {
                 'transaction_id': transaction['transaction_id'],
@@ -60,8 +55,8 @@ class MoodyBills():
                 'account_id': transaction['account_id']
                 }
             transactions.append(transactions_dict)
-
         print(f'{line[0]} number of accounts: {len(accounts)}')
         print(f'{line[0]} number of transactions: {len(transactions)}')
-        
+        print(accounts)
+        print(transactions)
         return account, transactions
