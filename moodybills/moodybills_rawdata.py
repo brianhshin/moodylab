@@ -19,7 +19,6 @@ class MoodyBillsRawdata():
             user=os.environ['moodydb_conn_user'], 
             password=os.environ['moodydb_conn_pw']
             )
-        print(f'successful moodydb connection.')
         self.moodyutils = MoodyUtils()
         print(f'successful moodydb connection.')
         self.schema = 'rawdata'

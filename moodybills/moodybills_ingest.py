@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from moodybills_plaid import MoodyBills
 from moodybills_rawdata import MoodyBillsRawdata
+from moodybills_staging import MoodyBillsStaging
 sys.path.append('../')
 from moodyutils import MoodyUtils
 
@@ -61,6 +62,11 @@ def load_rawdata():
     moodydb_rawdata.create_accounts_rawdata()
     moodydb_rawdata.create_transactions_rawdata()
 
+def load_staging():
+    moodydb_staging = MoodyBillsStaging()
+    moodydb_staging.create_accounts_staging()
+    moodydb_staging.create_transactions_staging()
+
 # u know what it do
 if __name__ == '__main__':
     # parse is_backfill from args
@@ -68,5 +74,6 @@ if __name__ == '__main__':
     print('is_backfill:', is_backfill)
     ingest_moodybills(is_backfill)
     load_rawdata()
+    load_staging()
 
 
