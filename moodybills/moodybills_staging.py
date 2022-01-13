@@ -123,4 +123,5 @@ class MoodyBillsStaging():
             """
         cur.execute(transactions_create_sql)
         self.conn.commit()
+        self.conn.close()
         log.info(f'inserted values into {self.schema}.{transactions_staging_table}')

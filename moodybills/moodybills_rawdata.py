@@ -92,4 +92,5 @@ class MoodyBillsRawdata():
             insert_sql = self.moodyutils.insert_data(self.schema, transactions_rawdata_table, item)    
             cur.execute(insert_sql)
         self.conn.commit()
+        self.conn.close()
         log.info(f'inserted values into {self.schema}.{transactions_rawdata_table}')
