@@ -28,27 +28,27 @@ class MoodyBillsStaging():
         cur = self.conn.cursor()
         accounts_staging_sql = f"""
             CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_staging_table} (
-         	SELECT
-         		CAST(account_id AS VARCHAR) AS account_id,
-         		DATE(balance_date) AS balance_date,
-         		CAST(mask AS INT) AS mask,
-   		        CAST(available_balance AS FLOAT) AS available_balance,
-         		CAST(current_balance AS FLOAT) AS current_balance,
-         		CAST(iso_currency_code AS VARCHAR) AS iso_currency_code,
-         		CASE
-         			WHEN balance_limit = 'None'
-         				THEN NULL
-         			ELSE CAST(balance_limit AS FLOAT)
-         		END balance_limit,
-         		CASE
-         			WHEN official_name = 'None'
-         				THEN NULL
-         			ELSE CAST(official_name AS VARCHAR)
-         		END official_name,
-         		CAST(subtype AS VARCHAR) AS subtype,
-         		CAST(account_type AS VARCHAR) AS account_type
-         	FROM rawdata.moodybills_accounts_rawdata
-         ;
+                SELECT
+                    CAST(account_id AS VARCHAR) AS account_id,
+                    DATE(balance_date) AS balance_date,
+                    CAST(mask AS INT) AS mask,
+                    CAST(available_balance AS FLOAT) AS available_balance,
+                    CAST(current_balance AS FLOAT) AS current_balance,
+                    CAST(iso_currency_code AS VARCHAR) AS iso_currency_code,
+                    CASE
+                        WHEN balance_limit = 'None'
+                            THEN NULL
+                        ELSE CAST(balance_limit AS FLOAT)
+                    END balance_limit,
+                    CASE
+                        WHEN official_name = 'None'
+                            THEN NULL
+                        ELSE CAST(official_name AS VARCHAR)
+                    END official_name,
+                    CAST(subtype AS VARCHAR) AS subtype,
+                    CAST(account_type AS VARCHAR) AS account_type
+                FROM rawdata.moodybills_accounts_rawdata
+            );
             """
         cur.execute(accounts_staging_sql)
         self.conn.commit()
@@ -115,7 +115,7 @@ class MoodyBillsStaging():
                     CAST(payment_channel AS VARCHAR) AS payment_channel,
                     CAST(transaction_type AS VARCHAR) AS transaction_type
                 FROM rawdata.moodybills_transactions_rawdata
-            ;
+            );
             """
         cur.execute(transactions_create_sql)
         self.conn.commit()
