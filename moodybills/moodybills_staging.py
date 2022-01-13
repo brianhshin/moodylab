@@ -27,7 +27,7 @@ class MoodyBillsStaging():
         accounts_staging_table = f'moodybills_accounts_{self.schema}'
         cur = self.conn.cursor()
         accounts_staging_sql = f"""
-            DROP TABLE IF NOT EXISTS {self.schema}.{accounts_staging_table};
+            DROP TABLE IF EXISTS {self.schema}.{accounts_staging_table};
 
             CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_staging_table} AS (
                 SELECT
@@ -60,7 +60,7 @@ class MoodyBillsStaging():
         transactions_staging_table = f'moodybills_transactions_{self.schema}'
         cur = self.conn.cursor()
         transactions_create_sql = f"""
-            DROP TABLE IF NOT EXISTS {self.schema}.{transactions_staging_table};
+            DROP TABLE IF EXISTS {self.schema}.{transactions_staging_table};
 
             CREATE TABLE IF NOT EXISTS {self.schema}.{transactions_staging_table} AS (
                 SELECT
