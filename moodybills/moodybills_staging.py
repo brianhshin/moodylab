@@ -35,6 +35,13 @@ class MoodyBillsStaging():
                     CAST(account_id AS VARCHAR) AS account_id,
                     DATE(balance_date) AS balance_date,
                     CAST(mask AS VARCHAR) AS mask,
+                    CASE
+                        WHEN mask IN ('0069', '3294') 
+                            THEN 'brian'
+                        WHEN mask IN ('3935', '5309', '5517') 
+                            THEN 'jamie'
+                        ELSE 'shared'
+                    END account_owner,
                     CAST(available_balance AS FLOAT) AS available_balance,
                     CAST(current_balance AS FLOAT) AS current_balance,
                     CAST(iso_currency_code AS VARCHAR) AS iso_currency_code,

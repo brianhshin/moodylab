@@ -34,6 +34,7 @@ class MoodyBillsProd():
                 account_id TEXT NOT NULL,
                 balance_date DATE NOT NULL,
                 mask TEXT NOT NULL,
+                account_owner TEXT,
                 available_balance FLOAT,
                 current_balance FLOAT,
                 iso_currency_code TEXT,
@@ -51,6 +52,7 @@ class MoodyBillsProd():
                     account_id,
                     balance_date,
                     mask,
+                    account_owner,
                     available_balance,
                     current_balance,
                     iso_currency_code,
@@ -64,6 +66,7 @@ class MoodyBillsProd():
                 ORDER BY balance_date ASC
             ON CONFLICT(account_id, balance_date) DO UPDATE SET
                 mask = excluded.mask,
+                account_owner = excluded.account_owner,
                 available_balance = excluded.available_balance,
                 current_balance = excluded.current_balance,
                 iso_currency_code = excluded.iso_currency_code,
@@ -88,7 +91,7 @@ class MoodyBillsProd():
                 transaction_id TEXT PRIMARY KEY,
                 transaction_name TEXT NOT NULL,
                 account_id TEXT,
-                amount TEXT,
+                amount FLOAT,
                 iso_currency_code TEXT,
                 category_id INT,
                 transaction_date DATE,
