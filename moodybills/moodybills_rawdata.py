@@ -20,15 +20,16 @@ class MoodyBillsRawdata():
             password=os.environ['moodydb_conn_pw']
             )
         self.moodyutils = MoodyUtils()
-        print(f'successful moodydb connection.')
         self.schema = 'rawdata'
         self.today = datetime.now().strftime("%Y%m%d")
 
     def create_accounts_rawdata(self):
         accounts_data = self.moodyutils.s3_download(f'moodybills/accounts/accounts_{self.today}.json')
-        accounts_rawdata_table = 'moodybills_accounts_rawdata'
+        accounts_rawdata_table = f'accounts_{self.schema}'
         cur = self.conn.cursor()
         accounts_create_sql = f"""
+            CREATE SCHEMA IF NOT EXISTS {self.schema};
+
             CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_rawdata_table} (
                 account_id TEXT NOT NULL,
                 balance_date TEXT NOT NULL,
@@ -39,20 +40,20 @@ class MoodyBillsRawdata():
                 balance_limit TEXT NOT NULL,
                 official_name TEXT NOT NULL,
                 subtype TEXT NOT NULL,
-                account_type TEXT NOT NULL
+                account_type TEXT NOT NULL,
+                created_timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
             );
             """
         cur.execute(accounts_create_sql)
         for item in accounts_data:
             insert_sql = self.moodyutils.insert_data(self.schema, accounts_rawdata_table, item)
             cur.execute(insert_sql)
-
         self.conn.commit()
         log.info(f'inserted values into {self.schema}.{accounts_rawdata_table}')
 
     def create_transactions_rawdata(self):
         transactions_data = self.moodyutils.s3_download(f'moodybills/transactions/transactions_{self.today}.json')
-        transactions_rawdata_table = 'moodybills_transactions_rawdata'
+        transactions_rawdata_table = f'transactions_{self.schema}'
         cur = self.conn.cursor()
         transactions_create_sql = f"""
             CREATE TABLE IF NOT EXISTS {self.schema}.{transactions_rawdata_table} (
@@ -84,7 +85,8 @@ class MoodyBillsRawdata():
                 pending_transaction_id TEXT NOT NULL,
                 account_owner TEXT NOT NULL,
                 transaction_code TEXT NOT NULL,
-                transaction_type TEXT NOT NULL
+                transaction_type TEXT NOT NULL,
+                created_timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
             );
             """
         cur.execute(transactions_create_sql)

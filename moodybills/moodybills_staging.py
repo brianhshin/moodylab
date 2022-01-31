@@ -19,21 +19,22 @@ class MoodyBillsStaging():
             user=os.environ['moodydb_conn_user'], 
             password=os.environ['moodydb_conn_pw']
             )
-        print(f'successful moodydb connection.')
         self.schema = 'staging'
         self.today = datetime.now().strftime("%Y%m%d")
 
     def create_accounts_staging(self):
-        accounts_staging_table = f'moodybills_accounts_{self.schema}'
+        accounts_staging_table = f'accounts_{self.schema}'
         cur = self.conn.cursor()
         accounts_staging_sql = f"""
+            CREATE SCHEMA IF NOT EXISTS {self.schema};
+
             DROP TABLE IF EXISTS {self.schema}.{accounts_staging_table};
 
             CREATE TABLE IF NOT EXISTS {self.schema}.{accounts_staging_table} AS (
                 SELECT
                     CAST(account_id AS VARCHAR) AS account_id,
                     DATE(balance_date) AS balance_date,
-                    CAST(mask AS INT) AS mask,
+                    CAST(mask AS VARCHAR) AS mask,
                     CAST(available_balance AS FLOAT) AS available_balance,
                     CAST(current_balance AS FLOAT) AS current_balance,
                     CAST(iso_currency_code AS VARCHAR) AS iso_currency_code,
@@ -49,7 +50,9 @@ class MoodyBillsStaging():
                     END official_name,
                     CAST(subtype AS VARCHAR) AS subtype,
                     CAST(account_type AS VARCHAR) AS account_type
-                FROM rawdata.moodybills_accounts_rawdata
+                FROM rawdata.accounts_rawdata t
+                WHERE created_timestamp = (SELECT MAX(created_timestamp) FROM rawdata.accounts_rawdata)
+                -- WHERE created_timestamp = (SELECT MAX(created_timestamp) FROM rawdata.accounts_rawdata WHERE account_id = t.account_id)
             );
             """
         cur.execute(accounts_staging_sql)
@@ -57,7 +60,7 @@ class MoodyBillsStaging():
         log.info(f'created {self.schema}.{accounts_staging_table}')
 
     def create_transactions_staging(self):
-        transactions_staging_table = f'moodybills_transactions_{self.schema}'
+        transactions_staging_table = f'transactions_{self.schema}'
         cur = self.conn.cursor()
         transactions_create_sql = f"""
             DROP TABLE IF EXISTS {self.schema}.{transactions_staging_table};
@@ -118,7 +121,8 @@ class MoodyBillsStaging():
                     END payment_processor,
                     CAST(payment_channel AS VARCHAR) AS payment_channel,
                     CAST(transaction_type AS VARCHAR) AS transaction_type
-                FROM rawdata.moodybills_transactions_rawdata
+                FROM rawdata.transactions_rawdata
+                WHERE created_timestamp = (SELECT MAX(created_timestamp) FROM rawdata.transactions_rawdata)
             );
             """
         cur.execute(transactions_create_sql)

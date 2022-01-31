@@ -6,6 +6,9 @@ from plaid.model.transactions_get_request_options import TransactionsGetRequestO
 from plaid.model.transactions_get_request import TransactionsGetRequest
 from plaid.api import plaid_api
 from datetime import datetime, timedelta
+import logging
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
 
 
 class MoodyBills():
@@ -23,7 +26,6 @@ class MoodyBills():
             )
         api_client = plaid.ApiClient(configuration)
         self.client = plaid_api.PlaidApi(api_client)
-        print(f'successful plaid api connection.')
 
     def get_moodybills(self, line, count, start_dt, end_dt):
         request = TransactionsGetRequest(
@@ -33,21 +35,23 @@ class MoodyBills():
             options=TransactionsGetRequestOptions(count=count)
             )
         response = self.client.transactions_get(request)
-        print(f'{line[0]} total_transactions: {response["total_transactions"]}')
         accounts = []
         transactions = []
         for account in response['accounts']:
             account_dict = {
                 'account_id': account['account_id'],
                 'balance_date': datetime.today().strftime('%Y-%m-%d'),
+                # 'balance_date': '2021-01-11',
                 'mask': account['mask'],
                 'available_balance': account['balances']['available'],
+                # 'available_balance': 666,
                 'current_balance': account['balances']['current'],
                 'iso_currency_code': account['balances']['iso_currency_code'],
                 'balance_limit': account['balances']['limit'],
                 'official_name': account['official_name'],
                 'subtype': account['subtype'],
                 'account_type': account['type']
+                # 'created_timestamp': datetime.now()
                 }
             accounts.append(account_dict)
         for transaction in response['transactions']:
@@ -81,8 +85,8 @@ class MoodyBills():
                 'account_owner': transaction['account_owner'],
                 'transaction_code': transaction['transaction_code'],
                 'transaction_type': transaction['transaction_type']
+                # 'created_timestamp': datetime.now()
                 }
             transactions.append(transactions_dict)
-        print(f'{line[0]} number of accounts: {len(accounts)}')
-        print(f'{line[0]} number of transactions: {len(transactions)}')
+        log.info(f'{line[0]} - {len(accounts)} accounts, {len(transactions)} transactions for {start_dt} - {end_dt}.')
         return accounts, transactions
