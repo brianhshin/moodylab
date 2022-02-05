@@ -50,7 +50,7 @@ class MoodyBillsETL():
             week_accounts, week_transactions = self.moodybills.get_moodybills(line, 500, start_date, end_date)
             line_accounts = week_accounts
             line_transactions += week_transactions
-            sleep(5)
+            sleep(2)
         return line_accounts, line_transactions
 
     def moodybills_current(self, line):
