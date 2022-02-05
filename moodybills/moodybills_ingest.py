@@ -6,6 +6,7 @@ import json
 import pandas as pd
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from time import sleep
 from moodybills_plaid import MoodyBills
 from moodybills_rawdata import MoodyBillsRawdata
 from moodybills_staging import MoodyBillsStaging
@@ -49,6 +50,7 @@ class MoodyBillsETL():
             week_accounts, week_transactions = self.moodybills.get_moodybills(line, 500, start_date, end_date)
             line_accounts = week_accounts
             line_transactions += week_transactions
+            sleep(5)
         return line_accounts, line_transactions
 
     def moodybills_current(self, line):
@@ -71,7 +73,6 @@ class MoodyBillsETL():
                 line_accounts, line_transactions = self.moodybills_current(line)
             accounts += line_accounts
             transactions += line_transactions
-            sleep(5)
 
         accounts_filepath = f'moodybills/accounts/accounts_{self.today}.json'
         transactions_filepath = f'moodybills/transactions/transactions_{self.today}.json'
