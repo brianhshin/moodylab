@@ -71,6 +71,7 @@ class MoodyBillsETL():
                 line_accounts, line_transactions = self.moodybills_current(line)
             accounts += line_accounts
             transactions += line_transactions
+            sleep(5)
 
         accounts_filepath = f'moodybills/accounts/accounts_{self.today}.json'
         transactions_filepath = f'moodybills/transactions/transactions_{self.today}.json'
