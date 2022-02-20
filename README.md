@@ -1,6 +1,9 @@
 # moodylab
 this is where my personal projects will be. tinkering in the lab while in champ select
 
+WIP:
+- jenkins pipeline deployment on ec2
+
 ## moodybills
 moodybills is a personal finance postgres db. i registered with the plaid api and got connections to our different bank accounts.  [link to plaid safety/security policies](https://plaid.com/safety/)
 
