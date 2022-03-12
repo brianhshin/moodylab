@@ -40,7 +40,7 @@ class MoodyBillsETL():
 
     def moodybills_backfill(self, line):
         line_transactions = []
-        first_date = '2016-05-01'
+        first_date = '2020-01-01'
         months_to_date = pd.date_range(first_date, self.today, freq='MS').strftime('%Y-%m-%d').tolist()
         log.info(f'months to date since 2021-05-01: {months_to_date}.')
         for month in months_to_date:
@@ -50,7 +50,7 @@ class MoodyBillsETL():
             week_accounts, week_transactions = self.moodybills.get_moodybills(line, 500, start_date, end_date)
             line_accounts = week_accounts
             line_transactions += week_transactions
-            sleep(2)
+            # sleep(2)
         return line_accounts, line_transactions
 
     def moodybills_current(self, line):
