@@ -1,4 +1,0 @@
-boto3==1.14.41
-pandas==1.1.0
-plaid-python==8.8.0
-psycopg2-binary==2.9.3

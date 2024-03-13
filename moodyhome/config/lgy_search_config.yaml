@@ -1,0 +1,20 @@
+- name: brooklyn-ny
+  data:
+    city: Brooklyn
+    state: NY
+- name: white-plains-ny
+  data:
+    city: White Plains
+    state: NY
+- name: jersey-city-nj
+  data:
+    city: Jersey City
+    state: NJ
+- name: boston-ma
+  data:
+    city: Boston
+    state: MA
+- name: south-boston-ma
+  data:
+    city: South Boston
+    state: MA

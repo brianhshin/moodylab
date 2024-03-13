@@ -1,0 +1,57 @@
+[0m11:15:17.234598 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B92420760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B9308ACB0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B9308B0A0>]}
+
+
+============================== 11:15:17.237599 | 8792d4ab-027f-42c2-b1f5-681b67ca0dc9 ==============================
+[0m11:15:17.237599 [info ] [MainThread]: Running with dbt=1.6.1
+[0m11:15:17.239600 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\email\\.dbt', 'version_check': 'True', 'warn_error': 'None', 'log_path': 'logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt init moodylab', 'send_anonymous_usage_stats': 'True'}
+[0m11:15:17.239600 [warn ] [MainThread]: [ConfigFolderDirectory]: Unable to parse dict {'dir': WindowsPath('C:/Users/email/.dbt')}
+[0m11:15:17.240599 [info ] [MainThread]: Creating dbt configuration folder at 
+[0m11:15:17.242599 [debug] [MainThread]: Starter project path: C:\Python310\lib\site-packages\dbt\include\starter_project
+[0m11:15:17.287856 [info ] [MainThread]: 
+Your new dbt project "moodylab" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m11:15:17.289857 [info ] [MainThread]: Setting up your profile.
+[0m11:15:40.175619 [info ] [MainThread]: Profile moodylab written to C:\Users\email\.dbt\profiles.yml using target's sample configuration. Once updated, you'll be able to start developing with dbt.
+[0m11:15:40.176622 [debug] [MainThread]: Command `dbt init` succeeded at 11:15:40.176622 after 22.96 seconds
+[0m11:15:40.177620 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B92420760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B9307ED10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023B9307EB00>]}
+[0m11:15:40.177620 [debug] [MainThread]: Flushing usage events
+[0m11:18:19.398469 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B27740760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B2839E980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B2839D390>]}
+
+
+============================== 11:18:19.401987 | 8380457d-ad13-4370-90c1-6d38ff2e813e ==============================
+[0m11:18:19.401987 [info ] [MainThread]: Running with dbt=1.6.1
+[0m11:18:19.403988 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': 'logs', 'profiles_dir': 'C:\\Users\\email\\.dbt', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'invocation_command': 'dbt init dbt', 'send_anonymous_usage_stats': 'True'}
+[0m11:18:29.304921 [debug] [MainThread]: Starter project path: C:\Python310\lib\site-packages\dbt\include\starter_project
+[0m11:18:29.316731 [info ] [MainThread]: 
+Your new dbt project "moodydbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m11:18:29.317735 [info ] [MainThread]: Setting up your profile.
+[0m11:18:32.448726 [debug] [MainThread]: Command `dbt init` succeeded at 11:18:32.448726 after 13.08 seconds
+[0m11:18:32.449727 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B27740760>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B2839E980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000020B27E5F8B0>]}
+[0m11:18:32.449727 [debug] [MainThread]: Flushing usage events
