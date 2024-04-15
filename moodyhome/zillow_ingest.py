@@ -15,7 +15,6 @@ def zillow_ingest():
         homes_search_name, homes_data = moodyutils.zillow_scrape(search_query)
         homes_df = moodyutils.zillow_process(homes_data, now)
         homes_filepath = f"moodyhome/raw/zillow/{homes_search_name.replace('-', '_')}_{today}"
-
         print(f'-- {homes_search_name} --uploading file.')
         upload_response = moodyutils.s3_upload(homes_df.to_json(orient='records'), homes_filepath)
 

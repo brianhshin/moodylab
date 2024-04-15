@@ -12,9 +12,7 @@ def lgy_ingest():
 
     for search_query in lgy_config_data:
         homes_search_name, homes_data = moodyutils.lgy_scrape(search_query)
-
         homes_df = moodyutils.lgy_process(homes_data, now)
-
         homes_filepath = f'moodyhome/raw/lgy/{homes_search_name}_{today}'
         print(f'-- {homes_search_name} --uploading file.')
         upload_response = moodyutils.s3_upload(homes_df.to_json(orient='records'), homes_filepath)
