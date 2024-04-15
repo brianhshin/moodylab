@@ -18,6 +18,7 @@ The results provide the:
 - VA approval status
 - request received date
 - review completion date
+
 Although the results are informative, it provided little in ease of use for navigating the results. More importantly, there was no way to export the results to use in any meaningful way. They also had historical listings that were VA approved, but no longer for sale. 
 
 I wrote a python script (`moodyhome/lgy_ingest.py`) to scrape and ingest the raw data from the search results using bs4. I was able to process the data and push the raw json objects into an S3 bucket I created using AWS free tier. 
