@@ -84,11 +84,27 @@ class MoodyUtils():
         response = requests.get(url, headers=headers)
         html_content = response.text
         soup = bs(html_content, 'html.parser')
-        script_tag = soup.find('script', id='__NEXT_DATA__')
-        json_string = script_tag.string
-        data = json.loads(json_string)
-        homes_data = data['props']['pageProps']['searchPageState']['cat1']['searchResults']['listResults']
-        return homes_search_name, homes_data
+
+        num_of_pages = soup.findAll('li', {'aria-current': 'page'})[-1].get_text().split(' ')[-1]
+        print(num_of_pages)
+
+        homes_data_all = []
+
+        for i in range(1, int(num_of_pages)+1):
+            url = f"https://www.zillow.com/{homes_search_name}/{i}_p"
+            print(url)
+            response = requests.get(url, headers=headers)
+            html_content = response.text
+            soup = bs(html_content, 'html.parser')
+
+            script_tag = soup.find('script', id='__NEXT_DATA__')
+            json_string = script_tag.string
+            data = json.loads(json_string)
+            homes_data = data['props']['pageProps']['searchPageState']['cat1']['searchResults']['listResults']
+            # print(homes_data[0:1])
+            homes_data_all += homes_data
+
+        return homes_search_name, homes_data_all
 
     def zillow_process(self, homes_data, now):
         homes_df = pd.DataFrame(homes_data)

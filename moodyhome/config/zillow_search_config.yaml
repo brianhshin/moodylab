@@ -1,4 +1,4 @@
-- name: south-end-boston-ma
+- name: boston-ma-02118
   data:
     neighborhood: South End
     city: Boston
@@ -6,67 +6,91 @@
     region_id: "275429"
     price_min: 400000
     price_max: 700000
-- name: south-boston-ma
+- name: boston-ma-02118/sold
   data:
-    neighborhood: South Boston
+    neighborhood: South End
     city: Boston
     state: MA
-    region_id: "155633"
+    region_id: "275429"
     price_min: 400000
     price_max: 700000
-- name: park-slope-brooklyn-new-york-ny
-  data:
-    neighborhood: Park Slope
-    city: Brooklyn
-    state: NY
-    region_id: "197044"
-    price_min: 400000
-    price_max: 700000
-- name: greenpoint-brooklyn-new-york-ny
-  data:
-    neighborhood: Greenpoint
-    city: Brooklyn
-    state: NY
-    region_id: "270848"
-    price_min: 400000
-    price_max: 700000
-- name: williamsburg-brooklyn-new-york-ny
-  data:
-    neighborhood: Williamsburg
-    city: Brooklyn
-    state: NY
-    region_id: "199001"
-    price_min: 400000
-    price_max: 700000
-- name: east-williamsburg-brooklyn-new-york-ny
-  data:
-    neighborhood: East Williamsburg
-    city: Brooklyn
-    state: NY
-    region_id: "838365"
-    price_min: 400000
-    price_max: 700000
-- name: carroll-gardens-brooklyn-new-york-ny
-  data:
-    neighborhood: Carroll Gardens
-    city: Brooklyn
-    state: NY
-    region_id: "270811"
-    price_min: 400000
-    price_max: 700000
-- name: downtown-jersey-city-nj
-  data:
-    neighborhood: Downtown
-    city: Jersey City
-    state: NJ
-    region_id: "273483"
-    price_min: 400000
-    price_max: 700000
-- name: white-plains-ny
-  data:
-    neighborhood: ""
-    city: White Plains
-    state: NY
-    region_id: "34819"
-    price_min: 400000
-    price_max: 700000
+# - name: boston-ma-02118/rentals
+#   data:
+#     neighborhood: South End
+#     city: Boston
+#     state: MA
+#     region_id: "275429"
+#     price_min: 400000
+#     price_max: 700000
+# - name: south-end-boston-ma
+#   data:
+#     neighborhood: South End
+#     city: Boston
+#     state: MA
+#     region_id: "275429"
+#     price_min: 400000
+#     price_max: 700000
+# - name: south-boston-ma
+#   data:
+#     neighborhood: South Boston
+#     city: Boston
+#     state: MA
+#     region_id: "155633"
+#     price_min: 400000
+#     price_max: 700000
+# - name: park-slope-brooklyn-new-york-ny
+#   data:
+#     neighborhood: Park Slope
+#     city: Brooklyn
+#     state: NY
+#     region_id: "197044"
+#     price_min: 400000
+#     price_max: 700000
+# - name: greenpoint-brooklyn-new-york-ny
+#   data:
+#     neighborhood: Greenpoint
+#     city: Brooklyn
+#     state: NY
+#     region_id: "270848"
+#     price_min: 400000
+#     price_max: 700000
+# - name: williamsburg-brooklyn-new-york-ny
+#   data:
+#     neighborhood: Williamsburg
+#     city: Brooklyn
+#     state: NY
+#     region_id: "199001"
+#     price_min: 400000
+#     price_max: 700000
+# - name: east-williamsburg-brooklyn-new-york-ny
+#   data:
+#     neighborhood: East Williamsburg
+#     city: Brooklyn
+#     state: NY
+#     region_id: "838365"
+#     price_min: 400000
+#     price_max: 700000
+# - name: carroll-gardens-brooklyn-new-york-ny
+#   data:
+#     neighborhood: Carroll Gardens
+#     city: Brooklyn
+#     state: NY
+#     region_id: "270811"
+#     price_min: 400000
+#     price_max: 700000
+# - name: downtown-jersey-city-nj
+#   data:
+#     neighborhood: Downtown
+#     city: Jersey City
+#     state: NJ
+#     region_id: "273483"
+#     price_min: 400000
+#     price_max: 700000
+# - name: white-plains-ny
+#   data:
+#     neighborhood: ""
+#     city: White Plains
+#     state: NY
+#     region_id: "34819"
+#     price_min: 400000
+#     price_max: 700000
